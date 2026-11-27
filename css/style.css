@@ -1,0 +1,217 @@
+/* Ravi Buildcon · V2 "Struck"
+   Concrete is cast in orange formwork, then the formwork is struck. Every reveal on this page is a strike.
+   Three materials only: concrete (page), plywood formwork (brand orange, as a surface), ink. */
+:root{
+  --concrete:   oklch(0.93 0.004 250);
+  --concrete-2: oklch(0.86 0.005 250);
+  --concrete-3: oklch(0.78 0.006 250);
+  --ink:        oklch(0.18 0.01 55);
+  --ink-2:      oklch(0.38 0.012 55);
+  --ply:        #E67800;
+  --ply-deep:   oklch(0.60 0.165 50);
+  --ply-seam:   oklch(0.52 0.14 48);
+  --white:      oklch(0.99 0 0);
+
+  --type: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --guj: "Anek Gujarati", "Noto Sans Gujarati", "Shruti", sans-serif;
+
+  --gx: max(20px, env(safe-area-inset-left, 0px));
+  --gx-r: max(20px, env(safe-area-inset-right, 0px));
+  --gutter: clamp(20px, 4vw, 64px);
+  --ease: cubic-bezier(.16, 1, .3, 1);
+
+  /* the plywood: grain + seam + four tie-rod holes */
+  --tie: radial-gradient(circle, var(--ink) 0 3.5px, var(--ply-seam) 4px 6px, transparent 6.5px);
+  --grain: repeating-linear-gradient(0deg, oklch(0.55 0.15 50 / .09) 0 1px, transparent 1px 9px),
+           repeating-linear-gradient(0deg, oklch(0.80 0.15 65 / .10) 0 2px, transparent 2px 23px);
+}
+@font-face{font-family:"Archivo Fallback";src:local("Arial Narrow"),local("Arial");size-adjust:96%}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:88px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--concrete);color:var(--ink);font:400 18px/1.55 var(--type);font-stretch:100%;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,video{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration-thickness:2px;text-underline-offset:4px}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.hero :focus-visible,.foot :focus-visible{outline-color:var(--white)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.skip{position:absolute;left:-999px;top:8px;z-index:50;background:var(--ink);color:var(--white);padding:12px 16px;font-weight:700}
+.skip:focus{left:var(--gx)}
+h1,h2,h3{font-family:var(--type);font-weight:900;text-transform:uppercase;line-height:.84;letter-spacing:-.005em;margin:0;text-wrap:balance}
+.guj{font:600 clamp(1.15rem,2vw,1.6rem)/1.35 var(--guj);margin:0}
+
+.ply{background-color:var(--ply);background-image:var(--grain)}
+
+/* ── buttons: the fill rises from the bottom like a pour ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 22px;border:2px solid currentColor;
+  font:800 17px/1 var(--type);font-stretch:85%;text-transform:uppercase;letter-spacing:.04em;text-decoration:none;cursor:pointer;color:var(--ink);
+  background:linear-gradient(var(--ink),var(--ink)) no-repeat bottom/100% 0;transition:background-size .38s var(--ease),color .2s}
+.btn:hover,.btn:focus-visible{background-size:100% 100%;color:var(--concrete)}
+.btn-ply{background-color:var(--ply);border-color:var(--ply)}
+.btn-ply:hover,.btn-ply:focus-visible{border-color:var(--ink)}
+.btn-line{color:var(--white);background-image:linear-gradient(var(--white),var(--white))}
+.btn-line:hover,.btn-line:focus-visible{color:var(--ink)}
+.btn-ink{background-color:var(--ink);color:var(--concrete);border-color:var(--ink);background-image:linear-gradient(var(--ply),var(--ply))}
+.btn-ink:hover,.btn-ink:focus-visible{color:var(--ink)}
+
+/* ── top bar ── */
+.bar{position:fixed;z-index:20;top:0;left:0;right:0;display:flex;align-items:center;gap:20px;
+  padding:max(14px,env(safe-area-inset-top)) var(--gx-r) 0 var(--gx);pointer-events:none}
+.bar>*{pointer-events:auto}
+.logo{display:block;background:var(--concrete);padding:9px 11px;color:var(--ink);margin-right:auto}
+.logo svg{display:block;width:72px;height:auto}
+.bar-nav{display:flex;gap:4px;background:var(--concrete);padding:0 6px}
+.bar-nav a{display:flex;align-items:center;min-height:44px;padding:0 10px;font-weight:700;font-stretch:90%;text-decoration:none;text-transform:uppercase;font-size:15px;letter-spacing:.03em}
+.bar-nav a:hover{text-decoration:underline;text-decoration-color:var(--ply)}
+.bar-cta{min-height:48px;padding:0 16px;border-color:var(--ink)}
+
+/* ── 1 · hero: the cast face behind the formwork ── */
+.hero{position:relative;height:100svh;min-height:600px;overflow:hidden;background:var(--ink);color:var(--white);isolation:isolate}
+.hero-film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(to top,oklch(0.18 0.01 55 / .92) 0%,oklch(0.18 0.01 55 / .5) 42%,oklch(0.18 0.01 55 / .05) 72%)}
+.hero-copy{position:absolute;left:var(--gx);right:var(--gx-r);bottom:clamp(28px,7vh,72px)}
+.hero h1{font-size:clamp(4.6rem,min(17vw,27vh),16rem);font-stretch:66%;line-height:.8}
+.hero h1 .ln{display:block}
+.hero .guj{margin-top:18px;color:var(--white)}
+.lede{max-width:44ch;margin:12px 0 0;font-size:clamp(17px,1.4vw,20px);color:oklch(0.95 0.004 250)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.film-toggle{position:absolute;right:var(--gx-r);bottom:clamp(28px,7vh,72px);z-index:2;min-height:44px;padding:0 14px;border:2px solid oklch(1 0 0 / .6);
+  background:oklch(0.18 0.01 55 / .5);color:var(--white);font:700 14px var(--type);text-transform:uppercase;letter-spacing:.05em;cursor:pointer}
+.film-toggle:hover{border-color:var(--white)}
+
+/* the wall: a grid of formwork panels with the RAVI mark pressed through them */
+.wall{display:none}
+.motion .wall{display:grid;position:absolute;inset:0;z-index:5;grid-template-columns:repeat(var(--cols),1fr);grid-template-rows:repeat(var(--rows),1fr);pointer-events:none}
+.panel{position:relative;background-color:var(--ply);background-image:var(--tie),var(--tie),var(--tie),var(--tie),var(--grain);
+  background-size:16px 16px,16px 16px,16px 16px,16px 16px,auto;background-repeat:no-repeat,no-repeat,no-repeat,no-repeat,repeat;
+  background-position:14% 16%,86% 16%,14% 84%,86% 84%,0 0;box-shadow:inset 0 0 0 1px var(--ply-seam),inset 0 0 0 3px oklch(0.78 0.15 62 / .35);will-change:transform}
+.panel::before{content:"";position:absolute;inset:0;background:var(--ply-deep);
+  -webkit-mask:url(../img/logo.svg) no-repeat;mask:url(../img/logo.svg) no-repeat;
+  -webkit-mask-size:var(--lw) auto;mask-size:var(--lw) auto;-webkit-mask-position:var(--mx) var(--my);mask-position:var(--mx) var(--my);
+  filter:drop-shadow(0 1px 0 oklch(0.80 0.15 65 / .7))}
+
+/* Cavalry-rendered strikes (transparent VP9), laid over the wall or the names; removed when they end */
+.cav{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;z-index:4}
+.names-wrap{position:relative}
+.names-wrap .cav{height:min(100%,100svh)}   /* shutter the first screenful only, so the boards keep their scale on a long phone list */
+
+/* ── section heads ── */
+.sec-head{padding:0 var(--gx-r) 0 var(--gx);max-width:1400px}
+.sec-head p{max-width:52ch;margin:18px 0 0;color:var(--ink-2)}
+h2{font-size:clamp(3rem,9vw,8.5rem);font-stretch:68%}
+.strike{position:relative;width:fit-content}
+.shutter{position:absolute;inset:-.06em -.18em -.04em;z-index:3;pointer-events:none;display:block;
+  background-color:var(--ply);background-image:var(--tie),var(--tie),var(--grain);background-size:14px 14px,14px 14px,auto;
+  background-repeat:no-repeat,no-repeat,repeat;background-position:10px 50%,calc(100% - 10px) 50%,0 0;box-shadow:inset 0 0 0 1px var(--ply-seam);transform-origin:50% 0}
+.cast .shutter{inset:0}
+.cast .shutter + .shutter{left:50%}
+.cast .shutter:first-of-type{right:50%}
+
+/* ── 2 · the sentence ── */
+.say{padding:clamp(88px,16vh,180px) var(--gx-r) clamp(72px,12vh,140px) var(--gx);max-width:1500px}
+.say-big{margin:0;font-weight:800;font-stretch:82%;font-size:clamp(2rem,5.2vw,5rem);line-height:1.02;letter-spacing:-.01em;text-wrap:pretty}
+.ply-in{background-color:var(--ply);background-image:var(--grain);padding:0 .12em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.say-by{margin:28px 0 0;font-weight:700;color:var(--ink-2)}
+
+/* ── 3 · built to scale ── */
+.scale{position:relative;padding:clamp(56px,10vh,120px) 0 clamp(80px,12vh,140px);border-top:2px solid var(--ink)}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-top:24px}
+.filters button{font:700 15px var(--type);padding:0 14px;min-height:44px;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.filters button span{font-variant-numeric:tabular-nums;opacity:.65;margin-left:3px}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--concrete)}
+.names{list-style:none;margin:clamp(32px,6vh,64px) 0 0;padding:0 var(--gx-r) 0 var(--gx);display:flex;flex-wrap:wrap;align-items:baseline;gap:.05em .3em;font-size:16px}
+.names li{max-width:100%;transition:opacity .35s}
+.names li.off{opacity:.14}
+.names button{all:unset;cursor:pointer;display:inline;font-family:var(--type);font-weight:850;text-transform:uppercase;line-height:.88;
+  font-size:calc(1rem + var(--k) * clamp(1.9rem, 7.4vw, 7.8rem));font-stretch:calc(112% - var(--k) * 48%);letter-spacing:-.005em;overflow-wrap:anywhere;
+  text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:.09em;text-underline-offset:.08em;transition:text-decoration-color .2s}
+.names button:hover,.names button:focus-visible{text-decoration-color:var(--ply)}
+.names button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.names .nw{white-space:nowrap}
+.names .a{display:inline-block;vertical-align:top;margin-left:.2em;font:600 clamp(11px,.16em,15px)/1 var(--type);font-stretch:100%;color:var(--ink-2);text-transform:none;letter-spacing:0;font-variant-numeric:tabular-nums}
+.peek{position:fixed;z-index:15;left:0;top:0;margin:0;width:min(26vw,340px);pointer-events:none;opacity:0;transition:opacity .2s;background:var(--ink);color:var(--concrete);display:none}
+@media (hover:hover) and (pointer:fine){.peek{display:block}}
+.peek.on{opacity:1}
+.peek img{width:100%;aspect-ratio:5/4;object-fit:cover}
+.peek figcaption{padding:8px 10px;font:600 14px/1.3 var(--type)}
+.sheet{border:0;padding:0;width:min(92vw,680px);max-height:90svh;background:var(--concrete);color:var(--ink)}
+.sheet::backdrop{background:oklch(0.18 0.01 55 / .7)}
+.sheet img{width:100%;aspect-ratio:5/4;object-fit:cover;background:var(--concrete-2)}
+.sheet-body{padding:20px 22px 22px}
+.sheet h3{font-size:clamp(2rem,6vw,3.2rem);font-stretch:70%}
+.sheet p{margin:10px 0 18px;color:var(--ink-2)}
+
+/* ── 4 · three ways ── */
+.hire{padding:clamp(56px,10vh,120px) 0 clamp(64px,10vh,120px);border-top:2px solid var(--ink)}
+.ways{list-style:none;margin:clamp(32px,6vh,56px) 0 0;padding:0 var(--gx-r) 0 var(--gx);display:grid;gap:0}
+.way{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(20px,4vw,64px);align-items:end;padding:24px 0;border-top:1px solid var(--concrete-3)}
+.cast{position:relative;margin:0;overflow:hidden;background:var(--concrete-2)}
+.cast img{width:100%;aspect-ratio:16/9;object-fit:cover;filter:saturate(.9) contrast(1.05)}
+.way h3{font-size:clamp(2.2rem,4.6vw,4.2rem);font-stretch:70%}
+.way p{margin:12px 0 0;max-width:42ch}
+.way .fit{font-size:16px;color:var(--ink-2)}
+.way:nth-child(even) .cast{order:2}
+
+/* ── 5 · five hundred ── */
+.five{padding:clamp(64px,10vh,120px) var(--gx-r) clamp(72px,12vh,140px) var(--gx);overflow:hidden;background-color:var(--ply);background-image:var(--grain)}
+.five h2{font-stretch:62%}
+.five-num{display:block;font-size:clamp(11rem,46vw,44rem);line-height:.76;letter-spacing:-.02em;color:var(--ink);margin-left:-.04em}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  /* a real photo of a crew on a rebar deck, cast into the numerals and darkened by multiply (a photo fill, not a gradient) */
+  .five-num{background:url(../img/photo/crew-s.webp) 50% 40%/cover oklch(0.42 0.02 55);background-blend-mode:multiply;
+    -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+}
+.five-words{display:block;margin-top:.25em;font-size:clamp(2.4rem,7vw,6.5rem);line-height:.86}
+.five p{margin:24px 0 0;max-width:36ch;font-size:clamp(18px,1.6vw,22px);font-weight:600}
+
+/* ── 6 · where ── */
+.where{padding:clamp(56px,10vh,120px) 0 clamp(64px,10vh,120px)}
+.places{list-style:none;margin:clamp(28px,5vh,48px) 0 0;padding:0 var(--gx-r) 0 var(--gx);columns:4 220px;column-gap:clamp(20px,3vw,48px)}
+.places li{break-inside:avoid;display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 0 7px;border-bottom:1px solid var(--concrete-3)}
+.places b{font-weight:800;font-stretch:80%;text-transform:uppercase;font-size:clamp(1.25rem,1.8vw,1.6rem);line-height:1}
+.places span{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink-2)}
+.places li.top b{font-size:clamp(2.4rem,4vw,3.6rem)}
+.places li.top span{font-size:1.6rem;color:var(--ink)}
+
+/* ── 7 · contact ── */
+.contact{padding:clamp(64px,10vh,120px) var(--gx-r) clamp(64px,10vh,120px) var(--gx);background-color:var(--ply);background-image:var(--grain)}
+.contact h2{font-size:clamp(3rem,8vw,7.5rem)}
+.contact .shutter{background-color:var(--ink);background-image:none;box-shadow:none}
+.phone{display:block;width:fit-content;margin-top:clamp(20px,4vh,40px);font-weight:900;font-stretch:66%;font-size:clamp(3rem,12.5vw,12rem);line-height:.86;text-decoration:none;font-variant-numeric:tabular-nums;white-space:nowrap}
+.phone:hover{text-decoration:underline;text-decoration-thickness:.06em;text-underline-offset:.08em}
+.contact-sub{max-width:52ch;margin:20px 0 0;font-weight:500}
+.lead{margin-top:32px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px;max-width:880px}
+.lead label{display:grid;gap:6px;font-weight:700;font-size:15px}
+.lead input:not([type=radio]){font:400 18px var(--type);padding:12px;border:2px solid var(--ink);background:var(--concrete);color:var(--ink);border-radius:0;min-height:52px;width:100%}
+.lead input::placeholder{color:var(--ink-2)}
+.lead input:focus-visible{outline:3px solid var(--ink);outline-offset:1px}
+.lead fieldset{grid-column:1/-1;border:0;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:4px 22px}
+.lead legend{font-weight:700;font-size:15px;padding:0;margin-bottom:4px}
+.lead .opt{display:flex;align-items:center;gap:8px;font-weight:600;font-size:17px;min-height:44px}
+.lead .opt input{width:22px;height:22px;accent-color:var(--ink)}
+.err{grid-column:1/-1;margin:0;min-height:1.2em;font-weight:700}
+.lead .btn{grid-column:1/-1;justify-self:start}
+.office{margin-top:40px;font-style:normal;display:grid;gap:8px;font-weight:600;border-top:2px solid var(--ink);padding-top:18px;max-width:880px}
+.office a{overflow-wrap:anywhere}
+
+/* ── footer ── */
+.foot{background:var(--ink);color:var(--concrete);padding:56px var(--gx-r) max(40px,env(safe-area-inset-bottom)) var(--gx);display:grid;gap:16px}
+.foot-logo{width:170px;height:auto;color:var(--concrete)}
+.foot .meta{margin:0;font-size:15px;color:var(--concrete-2);max-width:70ch}
+
+/* ── hero reveal: lines rise out of the form (only when JS runs; .pre is cleared after 4 s regardless) ── */
+.motion.pre .hero-copy>*{opacity:0}
+
+/* ── phone ── */
+@media (max-width:860px){
+  .bar-nav{display:none}
+  .logo svg{width:60px}
+  .way{grid-template-columns:1fr;gap:14px}
+  .way:nth-child(even) .cast{order:0}
+  .lead{grid-template-columns:1fr}
+  .film-toggle{top:max(14px,env(safe-area-inset-top));margin-top:62px;bottom:auto}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
